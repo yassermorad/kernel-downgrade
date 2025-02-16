@@ -1,0 +1,49 @@
+-shutdown -h now   shutdown 
+-mkdir /vmtool ==> mount /dev/cdrom //vmtool/
+-tar xzvf  = x extarct z unconpress gzip -v verbose mode show files being extracted -f specifies the filename apt update 
+-rm /etc/nginx/sites-available/.seafile.conf.swp  if readonly 
+- /etc/ssl/certs/wild-pub.crt   ==> /etc/ssl/private/wild-priv.key
+
+
+c40179503b9d 
+docker cp /etc/ssl/certs/wild-pub.crt c40179503b9d:/etc/ssl/certs/wild-pub.crt
+docker cp /etc/ssl/private/wild-priv.key c40179503b9d:/etc/ssl/private/wild-priv.key
+docker exec -it c40179503b9d sh
+docker exec c40179503b9d service trueconf reload
+docker exec c40179503b9d service trueconf restart
+docker exec c40179503b9d ps aux
+docker logs c40179503b9d
+
+
+
+
+
+
+
+
+
+
+
+
+
+container id : c40179503b9d
+docker cp /etc/ssl/certs/wild-pub.crt c40179503b9d:/etc/ssl/certs/wild-pub.crt
+docker cp /etc/ssl/private/wild-priv.key c40179503b9d:/etc/ssl/private/wild-priv.key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

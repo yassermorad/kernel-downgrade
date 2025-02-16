@@ -1,0 +1,6 @@
+apt update 
+apt install realmd
+sudo realm discover eri.sci.eg
+sudo realm join -U ymorad eri.sci.eg 
+must install
+sssd-tools adcli sssd libnss-sss libpam-sss

@@ -1,0 +1,30 @@
+172.16.100.101
+System ==> Certificate ==> Certificate Sign Request (CSR)
+Generate Certificate Signing Requests (CSR) - 
+-Usage : Multi-Use
+-Node : ERI-ISE01 - ERI-ISE02
+-Subject : Common Name (CN) ==> FQDN ==> (ISE2025) =any name and should be register in DNS
+-Organizational Unit (OU) : ERI
+-Organization (O) : SCI
+-City (L) : Cairo
+-State (ST) : Cairo 
+-Country (C) : EG
+- Subject Alternative Name (SAN) + 4
+1- DNS Name : Eri-ise01.eri.sci.eg
+2- DNS Name : Eri-ise02.eri.sci.eg
+3- IP Address : 172.16.100.101
+4- IP Address : 172.16.100.102
+
+* Key type
+RSA
+ 
+* Key Length
+4096
+
+* Digest to Sign With
+SHA-384
+=====> Export
+put it 192.168.9.13
+
+
+

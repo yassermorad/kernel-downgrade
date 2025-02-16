@@ -1,0 +1,38 @@
+-docker run -d -p 80:80 -p 443:443 -p 4307:4307 -e ADMIN_USER=tc_admin -e ADMIN_PASSWORD=P@ssw0rd_eri -v /home/$USER/trueconf/server/lib:/opt/trueconf/server/var/lib trueconf/trueconf-server:stable
+-Ports must be open 4307-443
+-sudo apt install -yq apache2-utils
+
+- htpasswd -c -d -b passwd new_admin password
+
+-sudo bash -c 'cat passwd >> /root/trueconf/server/docker/passwd'
+
+- mkdir -p /home/test/trueconf/server/docker
+
+- touch /home/test/trueconf/server/docker/
+
+- sudo bash -c 'cat passwd >> /home/test/trueconf/server/docker/passwd'
+
+- cat /home/test/trueconf/server/docker/passwd
+
+- sudo bash -c 'echo new_admin >> /home/test/trueconf/server/docker/tcadmins'
+
+- docker inspect c40179503b9d
+- ls -l /home/root/trueconf/server/lib/    = source conf that stored on os
+- docker exec -it c40179503b9d bash  or docker exec -it c40179503b9d sh
+- "Mounts"  "Type": "bind"   "Source": "/home/root/trueconf/server/lib"
+                             "Destination": "/opt/trueconf/server/var/lib"
+============
+for copy any file from os to container without poweroff
+docker cp /etc/ssl/certs/wild-pub.crt c40179503b9d:/etc/ssl/certs/wild-pub.crt
+docker cp /etc/ssl/private/wild-priv.key c40179503b9d:/etc/ssl/private/wild-priv.key
+===========
+-cert must be through webapp ==> 
+
+
+
+
+
+
+
+
+

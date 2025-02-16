@@ -1,0 +1,159 @@
+-sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+-wget -O- "https://www.postgresql.org/media/keys/ACCC4CF8.asc" | \
+gpg --dearmor | sudo tee /usr/share/keyrings/postgres.gpg > \
+/dev/null
+
+-chmod 644 /usr/share/keyrings/postgres.gpg
+sed -i 's/deb/deb [signed-by=\/usr\/share\/keyrings\/postgres.gpg] /' /etc/apt/sources.list.d/pgdg.list
+-apt update
+-apt install postgresql-16
+-read -s -p "Insert Password:" DB_ERI_PWD
+-su - postgres -c "psql --command=\"CREATE ROLE carbonio_adm WITH LOGIN SUPERUSER encrypted password '$DB_ERI_PWD';\""
+- unset DB_ERI_PWD
+- su - postgres -c "psql --command=\"ALTER SYSTEM SET listen_addresses TO '*';\""
+- su - postgres -c "psql --command=\"ALTER SYSTEM SET max_connections = 500;\""
+- su - postgres -c "psql --command=\"ALTER SYSTEM SET shared_buffers = 5000;\""
+- echo "host    all             all             0.0.0.0/0            md5" >> /etc/postgresql/16/main/pg_hba.conf
+- systemctl restart postgresql
+- vim /etc/apt/sources.list.d/zextras.list
+
+deb [arch=amd64 signed-by=/usr/share/keyrings/zextras.gpg] https://repo.zextras.io/release/ubuntu jammy main
+
+
+- wget -O- "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5dc7680bc4378c471a7fa80f52fd40243e584a21" \
+| gpg --dearmor | sudo tee \
+
+/usr/share/keyrings/zextras.gpg > /dev/null
+
+- chmod 644 /usr/share/keyrings/zextras.gpg
+
+- hostnamectl set-hostname carbonion.eri.sci.eg
+- echo -e  "127.0.0.1 localhost\n10.10.106.118 carbonion.eri.sci.eg carbonion" > /etc/hosts
+- echo "$(hostname -I) $(hostname -f)"
+- apt update && apt upgrade
+- apt install service-discover-server \
+carbonio-directory-server carbonio-proxy carbonio-webui \
+carbonio-files-ui carbonio-mta carbonio-mailbox-db \
+carbonio-appserver carbonio-user-management \
+carbonio-files-ce carbonio-files-public-folder-ui \
+carbonio-files-db carbonio-tasks-ce carbonio-tasks-db \
+carbonio-tasks-ui carbonio-storages-ce carbonio-preview-ce \
+carbonio-docs-connector-ce carbonio-docs-connector-db \
+carbonio-docs-editor carbonio-prometheus \
+carbonio-message-broker carbonio-message-dispatcher \
+carbonio-message-dispatcher-db carbonio-ws-collaboration-ce \
+carbonio-ws-collaboration-db carbonio-ws-collaboration-ui \
+carbonio-videoserver-ce carbonio-catalog
+- systemctl status carbonio-*
+- nat_1_1_mapping = "93.184.216.34"
+- systemctl enable carbonio-videoserver.service
+- systemctl start  carbonio-videoserver.service
+- carbonio-bootstrap
+- service-discover setup-wizard
+- no 
+====================================================================
+*** CONFIGURATION COMPLETE - press 'y' to apply configuration
+Select from menu, or press 'y' to apply config (? - help) y
+Saving config in /opt/zextras/config.3953...done.
+Operations logged to /tmp/zmsetup.20241229-160352.log
+Setting local config values...done.
+Setting up CA...done.
+Deploying CA to /opt/zextras/conf/ca ...done.
+Creating SSL carbonio-appserver certificate...done.
+Creating new carbonio-directory-server SSL certificate...done.
+Creating new carbonio-mta SSL certificate...done.
+Creating new carbonio-proxy SSL certificate...done.
+Installing mailboxd SSL certificates...done.
+Installing MTA SSL certificates...done.
+Installing LDAP SSL certificate...done.
+Installing Proxy SSL certificate...done.
+Setting replication password...done.
+Setting Postfix password...done.
+Setting amavis password...done.
+Setting nginx password...done.
+Initializing ldap...done.
+Setting replication password...done.
+Setting Postfix password...done.
+Setting amavis password...done.
+Setting nginx password...done.
+Creating server entry for carbonion.eri.sci.eg...done.
+Setting IP Mode...done.
+Saving CA in ldap...done.
+Saving SSL Certificate in ldap...done.
+Generating dhparam key...done.
+Setting service ports on carbonion.eri.sci.eg...done.
+Checking current setting of ReverseProxyAvailableLookupTargets
+Querying LDAP for other mailstores
+Searching LDAP for reverseProxyLookupTargets...done.
+Adding carbonion.eri.sci.eg to ReverseProxyAvailableLookupTargets
+Updating LDAP Schema version to '1734366715'...done.
+Setting TimeZone Preference...done.
+Disabling strict server name enforcement on carbonion.eri.sci.eg...done.
+Setting Public Service Hostname carbonion.eri.sci.eg...done.
+Initializing mta config...done.
+Setting services on carbonion.eri.sci.eg...done.
+Adding carbonion.eri.sci.eg to MailHostPool in default COS...done.
+Creating domain mail.eri.local...done.
+Setting default domain name...done.
+Setting value of postfix myorigin...done.
+Creating domain mail.eri.local...already exists.
+Creating admin account zextras@mail.eri.local...done.
+Creating root alias...done.
+Creating postmaster alias...done.
+Setting infrastructure notification sender and recipients accounts...done.
+Creating user spam.vnwams779g@mail.eri.local...done.
+Creating user ham.ogksdpc6@mail.eri.local...done.
+Creating user virus-quarantine.txbs4wpo@mail.eri.local...done.
+Setting spam, training and anti-virus quarantine accounts...done.
+Initializing store sql database...done.
+Setting up syslog.conf...done.
+Starting servers...
+done.
+Creating galsync account for default domain...done.
+Setting up zextras crontab...done.
+=========================================================
+
+
+Moving /tmp/zmsetup.20241229-160352.log to /opt/zextras/log
+
+
+Configuration complete - press return to exit
+- Moving /tmp/zmsetup.20241229-160352.log to /opt/zextras/log
+
+- last 
+
+- carbonio-bootstrap
+
+- service-discover setup-wizard ==> 10.10.106.118/24 ==> Create the cluster credentials password (will be used for setups)
+P@ssw0rd_eri
+- pending-setup -a 
+- Step 8: Bootstrap Carbonio Files Databases :
+- PGPASSWORD=$DB_ERI_PWD carbonio-files-db-bootstrap \
+  carbonio_adm 127.0.0.1 
+- ==> Password for user carbonio_adm: DB_ERI_PWD
+- PGPASSWORD=$DB_ERI_PWD carbonio-tasks-db-bootstrap \
+  carbonio_adm 127.0.0.1 --> DB_ERI_PWD
+
+Work Stream Collaboration (Chats)
+
+- PGPASSWORD=$DB_ERI_PWD carbonio-ws-collaboration-db-bootstrap \
+  carbonio_adm 127.0.0.1
+Work Stream Collaboration (Chats) Dispatcher
+
+- PGPASSWORD=$DB_ERI_PWD carbonio-message-dispatcher-db-bootstrap \
+  carbonio_adm 127.0.0.1 ==> DB_ERI_PWD
+ Work Stream Collaboration (Chats) migration
+- PGPASSWORD=$DB_ERI_PWD carbonio-message-dispatcher-migration \
+  carbonio_adm 10.10.106.118 20000
+- su zextras 
+- zextras$ zmcontrol stop
+- carbonio prov mc default carbonioFeatureChatsEnabled TRUE
+- su root
+- systemctl restart carbonio-message-broker
+- systemctl restart carbonio-ws-collaboration
+- systemctl restart carbonio-videoserver
+- curl -v http://10.10.106.118:10000/health | jq
+====
+https://www.youtube.com/watch?v=G9quoVgP_qk
+====

@@ -1,0 +1,10 @@
+vim /etc/samba/smb.conf
+----------------
+[test]
+path = /share
+writeable = yes
+public = yes
+browseable = yes
+valid users = yasser
+-----------------
+chcon -t samba _share_t /share -R

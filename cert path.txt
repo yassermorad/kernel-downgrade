@@ -1,0 +1,2 @@
+/etc/ssl/certs/wild-pub.crt
+/etc/ssl/private/wild-priv.key

@@ -1,0 +1,43 @@
+#NoEnv
+SetWorkingDir A_ScriptDir
+
+; Define monitor coordinates (x, y, width, height)
+monitors := [
+[0, 0, 1920, 1080],  ; Monitor 1
+[1920, 0, 1920, 1080],  ; Monitor 2
+[3840, 0, 1920, 1080],  ; Monitor 3
+[5760, 0, 1920, 1080],  ; Monitor 4
+[7680, 0, 1920, 1080],  ; Monitor 5
+[9600, 0, 1920, 1080]   ; Monitor 6
+
+]
+
+; Define links and credentials
+links := [
+["https://172.16.100.101/admin/login.jsp", "monitor", "Readonly_eri2025"],
+["https://internal.eri.sci.eg/", "", ""],
+["https://sf-espaces.eri.sci.eg:4444", "admin", "ESP$w0rk@2024"],
+["http://172.16.100.58/", "monitor", "Readonly_eri2025"],
+["https://172.16.100.200/webacs/loginAction.do?action=login&product=wcs&selectedCategory=en", "monitor", "Readonly_eri2025"],
+["https://example.com", "", ""]
+]
+
+; Open links in separate monitors
+Loop, len(links) {
+link := links[A_Index][1]
+username := links[A_Index][2]
+password := links[A_Index][3]
+monitor := monitors[A_Index]
+
+Run, % "chrome.exe --new-window --window-position=" monitor[1] "," monitor[2] " " link
+
+; Optional: Send credentials and navigate
+if (username != "") {
+    WinWait, % link
+    Send, % username
+    Send, {Tab}
+    Send, % password
+    Send, {Enter}
+}
+
+}

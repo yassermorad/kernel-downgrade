@@ -1,0 +1,3 @@
+us africa 
+192.168.248.155  hyper-v
+192.168.248.150 proxmox

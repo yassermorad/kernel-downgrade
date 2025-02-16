@@ -1,0 +1,5 @@
+last login
+ubuntu last
+=== win 
+query user
+net user admin 

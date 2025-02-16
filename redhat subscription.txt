@@ -1,0 +1,23 @@
+You can get a no-cost Red Hat Enterprise Linux (RHEL) subscription for development purposes,
+ which allows you to install packages using yum or dnf. Here's how:
+
+1. Register for the Red Hat Developer Program:
+
+Go to the Red Hat Developer Portal: developers.redhat.com
+Create an account or log in if you already have one.
+Look for the "Red Hat Developer Subscription for Individuals" or a similar option. It might be
+===========
+yasser.morad88
+Asd123@@12345678
+with ymorad@txdsystems.com
+2c94e72b94d740a50194fa125c2f3773
+sudo subscription-manager attach --pool=2c94e72b94d740a50194fa125c2f3773
+sudo subscription-manager register --username yasser.morad88 --password Asd123@@12345678
+sudo subscription-manager attach --auto
+===========
+-sudo subscription-manager register
+-sudo subscription-manager list --available
+-sudo subscription-manager attach --pool=2c94e72b94d740a50194fa125c2f3773
+-sudo subscription-manager attach --pool=2c94e72b94d740a50194fa125c233771
+-sudo subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms
+-sudo subscription-manager repos --enable=rhel-8-for-x86_64-appstream-rpms

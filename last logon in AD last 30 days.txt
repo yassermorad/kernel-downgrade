@@ -1,0 +1,22 @@
+# Define the time period (e.g., last 90 days)
+$timeSpan = (Get-Date).AddDays(-90)
+
+# Ensure the directory exists
+$reportDirectory = "C:\Reports"
+if (-not (Test-Path -Path $reportDirectory)) {
+    New-Item -ItemType Directory -Path $reportDirectory
+}
+
+# Generate the report of users active within the last 90 days
+$activeUsers = Get-ADUser -Filter * -Properties DisplayName, SamAccountName, lastLogonTimestamp | 
+    Where-Object {
+        # Convert lastLogonTimestamp to a readable date and filter by time
+        ($_.lastLogonTimestamp -ne $null) -and 
+        ([datetime]::FromFileTime($_.lastLogonTimestamp) -ge $timeSpan)
+    } | Select-Object DisplayName, SamAccountName, @{Name="LastLogonDate"; Expression={[datetime]::FromFileTime($_.lastLogonTimestamp)}}
+
+# Export the report to a CSV file
+$reportPath = "$reportDirectory\ActiveUsersReport.csv"
+$activeUsers | Export-Csv -Path $reportPath -NoTypeInformation -Encoding UTF8
+
+Write-Host "Report generated at: $reportPath"
