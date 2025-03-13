@@ -1,0 +1,58 @@
+The following documentation for adjust Ubuntu 20.04 with Nvidia driver v510.
+                                                * Kernel Downgrade *
+sshd ==> LoginGracetime2 ==> PermitRootLogin yes ==
+==> to disable tunneled ==> PasswordAuthentication yes
+4-GRUB_DEFAULT="gnulinux-advanced-4bd20918-1085-4057-8e19-568fc47670ee>gnulinux-5.11.0-41-generic-advanced-4bd20918-1085-4057-8e19-568fc47670ee"
+scp -r C:\Users\Y.Morad\Desktop\nvidia\t root@10.10.106.19:/N
+./NVIDIA-Linux-x86_64-510.47.03-grid.run
+sudo systemctl daemon-reload
+sudo echo "xfce4-session" | tee .xsession
+
+
+================================================
+
+
+1- sudo apt update
+
+2- nano /etc/modprobe.d/blacklist-nouveau.conf (add the following configs)
+   
+blacklist nouveau
+options nouveau modeset=0
+
+3- sudo apt-get install -y linux-image-5.11.0-41-generic linux-headers-5.11.0-41-generic
+
+4- grep menuentry /boot/grub/grub.cfg (to get kernel uuid)
+
+5- sudo nano /etc/default/grub  (edit GRUB_DEFAULT)
+
+GRUB_DEFAULT="gnulinux-advanced-4bd20918-1085-4057-8e19-568fc47670ee>gnulinux-5.11.0-41-generic-advanced-4bd20918-1085-4057-8e19-568fc47670ee"
+
+6- sudo update-grub
+
+7- apt-get install -y linux-headers-$(uname -r) build-essential
+
+8- update-initramfs -u
+
+9- reboot
+
+###############################################################################################################################################
+                                                  * GCC Downgrade *
+
+1- sudo apt-get remove --purge gcc-9 cpp-9 libgcc-9-dev
+
+- gcc --version
+2- 
+sudo dpkg -i gcc-9-base_9.3.0-17ubuntu1~20.04_amd64.deb
+sudo dpkg -i cpp-9_9.3.0-17ubuntu1~20.04_amd64.deb
+sudo dpkg -i libgcc-9-dev_9.3.0-17ubuntu1~20.04_amd64.deb
+sudo dpkg -i gcc-9_9.3.0-17ubuntu1~20.04_amd64.deb
+
+3- sudo apt --fix-broken install
+
+4- sudo apt-get update
+
+5-sudo ln -s /usr/bin/gcc-9 /usr/bin/gcc
+
+6- sudo ln -s $(which gcc) /usr/bin/cc
+
+7- install the driver

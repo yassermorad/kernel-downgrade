@@ -1,0 +1,26 @@
+from ubuntu Server : ssh-keygen download private key only in windows c:/users/myname/.ssh
+mkdir -p ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+touch ~/.ssh/authorized_keys     ~=/root
+Copy everything starting from ssh-rsa to authorized_keys and save it
+-----------
+sudo vim /etc/ssh/sshd_config
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+PubkeyAuthentication yes
+:x!
+sudo systemctl restart ssh
+===============
+From Client
+=========
+Powershell:
+ssh -i C:\Users\Y.Morad\.ssh\id_rsa root@10.10.106.125
+=========
+Putty
+1-open puttygen ==> load private key and save private key for change extention to ppk
+2-session ==> root@10.10.106.125 --> Connection --> ssh -->Auth--> Credentials-private key 
+=========
+Mobaxterm ==> Advanced ssh settings ==> use private key ==> select key 
+Remote host ==> root@10.10.106.125
